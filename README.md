@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Suno Beats Studio
 
-## Getting Started
+A professional-grade, minimalist sanctuary for sculpting instrumental sketches. Powered by Next.js and high-fidelity generative audio engines.
 
-First, run the development server:
+## 🎚️ Overview
+
+Suno Beats is a boutique web application designed for producers and creators who need high-quality instrumental foundations. By strictly focusing on rhythm, atmosphere, and melody, it provides a quiet, focused environment for audio generation.
+
+## ✨ Features
+
+- **Dual Generation Flows**: Switch between "Quick Idea" for rapid prototyping and "Custom Control" for precise style blocks.
+- **Engine Selection**: Support for multiple Suno models (V4.5, V5, etc.) with real-time feedback.
+- **Real-time Polishing**: A "live" status engine that updates incrementally as the generation progresses.
+- **Webhook Verifier**: Integrated support for verified delivery snapshots, ensuring the freshest audio links.
+- **Premium Aesthetics**: A custom-crafted UI using Glassmorphism, Inter typography, and Instrument Serif accents.
+- **Production Hardened**: Modular architecture with specialized hooks, utility-first UI logic, and shared state management.
+
+## 🛠️ Tech Stack
+
+- **Framework**: [Next.js 16](https://nextjs.org/) (App Router)
+- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/) with custom Glassmorphism utilities.
+- **Typography**: Inter (Sans) & Instrument Serif (Italic).
+- **Validation**: [Zod](https://zod.dev/) for robust schema verification.
+- **Infrastructure**: Configurable storage (Upstash Redis or In-memory) for webhook snapshots.
+
+## 🏗️ Architecture
+
+The project follows a "Cohesion & Verbs" principle:
+- **Hooks**: Logic is centralized in [useBeatStatus](src/hooks/use-beat-status.ts) for clean state management.
+- **Components**: UI is broken down into modular, single-purpose units.
+- **Verby Functions**: Internal logic is named clearly (e.g., `handleGenerate`, `getStatusLabel`) for maximum maintainability.
+- **Single Source of Truth**: Shared constants for models and UI labels prevent divergence.
+
+## 🚀 Getting Started
+
+### 1. Environment Configuration
+
+Clone `.env.example` to `.env.local` and provide your Suno API credentials:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+SUNO_API_KEY=your_api_key_here
+SUNO_CALLBACK_URL=https://your-app.com/api/webhooks/suno?token=your_random_token
+SUNO_WEBHOOK_SECRET=your_random_token
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+*Note: For production delivery, Upstash Redis is recommended to avoid webhook data loss.*
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 2. Install & Run
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm install
+npm run dev
+```
 
-## Learn More
+Visit `http://localhost:3000` to start orchestrating.
 
-To learn more about Next.js, take a look at the following resources:
+## 📄 License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Internal use only for Suno Beats Studio.
