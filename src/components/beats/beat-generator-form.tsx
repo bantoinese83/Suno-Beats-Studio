@@ -2,6 +2,7 @@
 
 import { useMemo, useState, type FormEvent } from "react";
 import { useBeatStatus } from "@/hooks/use-beat-status";
+import { useOrchestrationLogs } from "@/hooks/use-orchestration-logs";
 import { buildDisplayTracks, getSessionStatusLabel } from "@/lib/suno/ui-utils";
 import { ModeToggle } from "./mode-toggle";
 import { ModelSelector } from "./model-selector";
@@ -31,6 +32,10 @@ export function BeatGeneratorForm() {
   const sessionLabel = getSessionStatusLabel(details, callbackRecord);
   const hasWebhookLinks = displayTracks.some((t) => t.source === "webhook");
   const formError = localError || pollError;
+
+  const currentLog = useOrchestrationLogs(
+    isSubmitting ? "START" : details?.status || null
+  );
 
   async function handleGenerate(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -176,6 +181,19 @@ export function BeatGeneratorForm() {
           )}
 
           <div className="space-y-4">
+            <div className="rounded-xl bg-white/[0.03] p-4 font-mono">
+              <div className="flex items-center gap-3">
+                <div className="flex gap-1">
+                  <div className="h-1 w-1 animate-pulse rounded-full bg-primary" />
+                  <div className="h-1 w-1 animate-pulse rounded-full bg-primary delay-150" />
+                  <div className="h-1 w-1 animate-pulse rounded-full bg-primary delay-300" />
+                </div>
+                <p className="text-[10px] uppercase tracking-widest text-muted-foreground/80">
+                  {currentLog}
+                </p>
+              </div>
+            </div>
+
             <div className="flex items-center justify-between">
               <h3 className="text-sm font-medium text-muted-foreground">Generated Stems</h3>
               {hasWebhookLinks && (
