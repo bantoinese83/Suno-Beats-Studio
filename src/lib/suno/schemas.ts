@@ -49,6 +49,7 @@ export const generationDetailsSchema = z.object({
       taskId: z.string().optional(),
       sunoData: z.array(sunoTrackSchema).optional(),
     })
+    .nullable()
     .optional(),
   status: generationStatusSchema,
   type: z.string().optional(),
