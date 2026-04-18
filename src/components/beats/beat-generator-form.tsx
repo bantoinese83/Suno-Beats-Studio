@@ -13,20 +13,16 @@ type GenerateResponse = { taskId: string } | { error: string; code?: number };
 
 const STARTER_PROMPTS = [
   {
-    label: "Dark Piano",
+    label: "Melancholic Loop",
     prompt: "Dark, melancholic piano loop in G MAJOR E MINOR layered with vintage soul samples and atmospheric synth pads. Keys and subtle synth textures create a moody backdrop. Occasional, sparse drum fills and processed vocal stabs add texture. No full drums",
   },
   {
-    label: "Soulful Lofi",
-    prompt: "Dusty lofi hip hop beat, warm Rhodes chords, crackling vinyl atmosphere, subtle laid-back groove, jazzy bassline.",
+    label: "Midnight Keys",
+    prompt: "Nocturnal piano sketch, minor key, heavy reverb, subtle vinyl static, distant cello layers, extremely slow tempo, emotional and haunting.",
   },
   {
-    label: "Industrial",
-    prompt: "Hard industrial techno loop, distorted kick drum, metallic percussion, rhythmic white noise, dark brooding atmosphere.",
-  },
-  {
-    label: "Cinematic",
-    prompt: "Ethereal cinematic ambient sketch, swelling synth pads, distant granular textures, orchestral strings, zero drums.",
+    label: "Dark Textures",
+    prompt: "Experimental dark ambient keys, reversed piano textures, deep sub-bass pulses, industrial atmospheric noise, haunting vocal echoes, rhythmic but drumless.",
   },
 ];
 
