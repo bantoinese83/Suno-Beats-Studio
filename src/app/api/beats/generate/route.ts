@@ -12,6 +12,7 @@ import {
   submitBeatForRequest,
 } from "@/lib/suno/beat-service";
 import { jsonResponse } from "@/lib/suno/http/json-response";
+import { beatRepository } from "@/lib/db/repository";
 
 export async function POST(request: Request) {
   let payload: unknown;
@@ -52,6 +53,18 @@ export async function POST(request: Request) {
 
   try {
     const result = await submitBeatForRequest(service, parsed.data);
+    
+    // Persist the blueprint
+    await beatRepository.saveBlueprint({
+      taskId: result.taskId,
+      prompt: parsed.data.mode === "quick" ? parsed.data.prompt : parsed.data.style,
+      mode: parsed.data.mode,
+      model: parsed.data.model || "V4_5ALL",
+      title: parsed.data.mode === "custom" ? parsed.data.title : undefined,
+      createdAt: new Date().toISOString(),
+      isFavorite: false,
+    });
+
     return jsonResponse({ taskId: result.taskId });
   } catch (error) {
     if (error instanceof SunoRequestError) {

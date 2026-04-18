@@ -28,8 +28,23 @@ export function TrackItem({
   const [trackDuration, setTrackDuration] = useState(0);
   const [isSeeking, setIsSeeking] = useState(false);
   
+  const [isFavorite, setIsFavorite] = useState(false);
+  
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const progressBarRef = useRef<HTMLDivElement | null>(null);
+
+  const toggleFavorite = async () => {
+    try {
+      const res = await fetch("/api/beats/favorite", {
+        method: "POST",
+        body: JSON.stringify({ taskId: id }),
+      });
+      const data = await res.json();
+      setIsFavorite(!!data.isFavorite);
+    } catch {
+      console.error("Favorite failed");
+    }
+  };
 
   const togglePlay = () => {
     if (!audioRef.current) return;
@@ -111,6 +126,20 @@ export function TrackItem({
           </div>
 
           <div className="flex items-center gap-2 shrink-0">
+            <button 
+              onClick={toggleFavorite}
+              className={`flex h-10 w-10 items-center justify-center rounded-full border transition-all ${isFavorite ? 'border-emerald-500/50 bg-emerald-500/10 text-emerald-500' : 'border-white/10 text-zinc-500 hover:border-white/20 hover:text-white'}`}
+            >
+              <svg 
+                className={`h-4 w-4 ${isFavorite ? 'fill-current' : 'fill-none'}`} 
+                stroke="currentColor" 
+                viewBox="0 0 24 24" 
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              </svg>
+            </button>
+
             {streamAudioUrl && (
               <>
                 <audio ref={audioRef} src={streamAudioUrl} preload="metadata" />

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { BeatGeneratorForm } from "@/components/beats/beat-generator-form";
+import { BeatLibrary } from "@/components/beats/beat-library";
 
 export default function BeatsPage() {
   return (
@@ -36,6 +37,7 @@ export default function BeatsPage() {
           </div>
 
           <BeatGeneratorForm />
+          <BeatLibrary />
         </div>
       </main>
 
