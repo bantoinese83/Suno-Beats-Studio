@@ -10,7 +10,8 @@ type StatusResponse =
 
 export function useBeatStatus(taskId: string | null) {
   const [details, setDetails] = useState<GenerationDetails | null>(null);
-  const [callbackRecord, setCallbackRecord] = useState<SunoCallbackRecord | null>(null);
+  const [callbackRecord, setCallbackRecord] =
+    useState<SunoCallbackRecord | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isPolling, setIsPolling] = useState(false);
   const [prevTaskId, setPrevTaskId] = useState(taskId);
@@ -29,23 +30,31 @@ export function useBeatStatus(taskId: string | null) {
     if (!taskId) return;
 
     let cancelled = false;
-    let timer: ReturnType<typeof setInterval> | undefined;
+    let timer: ReturnType<typeof setTimeout> | undefined;
 
     const poll = async () => {
       setIsPolling(true);
+      let isTerminal = false;
       try {
         const [statusResult, callbackResult] = await Promise.all([
-          fetch(`/api/beats/status?taskId=${encodeURIComponent(taskId)}`).then(async (res) => {
-            const isJson = res.headers.get("content-type")?.includes("application/json");
-            const payload = isJson ? (await res.json()) as StatusResponse : { error: "Service temporarily unavailable" };
-            return { res, payload };
-          }),
+          fetch(`/api/beats/status?taskId=${encodeURIComponent(taskId)}`).then(
+            async (res) => {
+              const isJson = res.headers
+                .get("content-type")
+                ?.includes("application/json");
+              const payload = isJson
+                ? ((await res.json()) as StatusResponse)
+                : { error: "Service temporarily unavailable" };
+              return { res, payload };
+            },
+          ),
           fetchLatestBeatCallback(taskId),
         ]);
 
         if (cancelled) return;
 
-        const statusOk = statusResult.res.ok && !("error" in statusResult.payload);
+        const statusOk =
+          statusResult.res.ok && !("error" in statusResult.payload);
         const callbackOk = callbackResult.ok;
 
         const newDetails: GenerationDetails | null = statusOk
@@ -60,39 +69,39 @@ export function useBeatStatus(taskId: string | null) {
           setError(
             "error" in statusResult.payload
               ? statusResult.payload.error
-              : "We could not refresh this session."
+              : "We could not refresh this session.",
           );
         } else {
           setError(null);
         }
 
-        const terminalPoll = newDetails != null && isTerminalGenerationStatus(newDetails.status);
+        const terminalPoll =
+          newDetails != null && isTerminalGenerationStatus(newDetails.status);
         const terminalWebhook =
           newCallback?.callbackType === "complete" ||
           newCallback?.callbackType === "error" ||
           (newCallback != null && newCallback.code !== 200);
 
-        if ((terminalPoll || terminalWebhook) && timer) {
-          clearInterval(timer);
-          timer = undefined;
-        }
+        isTerminal = terminalPoll || terminalWebhook;
       } catch {
         if (!cancelled) {
           setError("Connection dropped. Still trying...");
         }
       } finally {
-        if (!cancelled) setIsPolling(false);
+        if (!cancelled) {
+          setIsPolling(false);
+          if (!isTerminal) {
+            timer = setTimeout(poll, 4000);
+          }
+        }
       }
     };
 
     void poll();
-    timer = setInterval(() => {
-      void poll();
-    }, 4000);
 
     return () => {
       cancelled = true;
-      if (timer) clearInterval(timer);
+      if (timer) clearTimeout(timer);
     };
   }, [taskId]);
 

@@ -13,7 +13,10 @@ export async function POST(request: Request) {
 
     const isFavorite = await beatRepository.toggleFavorite(taskId);
     return jsonResponse({ taskId, isFavorite });
-  } catch (error) {
-    return jsonResponse({ error: "Failed to toggle favorite." }, { status: 400 });
+  } catch {
+    return jsonResponse(
+      { error: "Failed to toggle favorite." },
+      { status: 400 },
+    );
   }
 }

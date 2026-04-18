@@ -11,12 +11,16 @@ export default function BeatsPage() {
             href="/"
             className="group flex items-center gap-2 text-xs font-bold uppercase tracking-[0.3em] text-zinc-500 transition hover:text-white"
           >
-            <span className="text-white transition-transform group-hover:-translate-x-1">←</span>
+            <span className="text-white transition-transform group-hover:-translate-x-1">
+              ←
+            </span>
             Suno Beats
           </Link>
           <div className="flex items-center gap-4">
             <span className="h-4 w-px bg-white/10" />
-            <span className="text-[10px] uppercase tracking-widest text-zinc-600">Pure Instrumental</span>
+            <span className="text-[10px] uppercase tracking-widest text-zinc-600">
+              Pure Instrumental
+            </span>
           </div>
         </div>
       </header>
@@ -31,8 +35,9 @@ export default function BeatsPage() {
               Sculpt your <span className="font-serif italic">soundscape.</span>
             </h1>
             <p className="max-w-xl text-sm leading-relaxed text-zinc-500">
-              Select an engine, define your texture, and let the generation unfold. 
-              Our workflow keeps vocals silent, focusing entirely on rhythm, atmosphere, and melody.
+              Select an engine, define your texture, and let the generation
+              unfold. Our workflow keeps vocals silent, focusing entirely on
+              rhythm, atmosphere, and melody.
             </p>
           </div>
 
@@ -45,9 +50,15 @@ export default function BeatsPage() {
         <div className="mx-auto max-w-5xl flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] uppercase tracking-widest text-zinc-700">
           <p>© 2026 Suno Beats Studio</p>
           <div className="flex gap-8">
-            <a href="#" className="hover:text-zinc-400 transition">Terms</a>
-            <a href="#" className="hover:text-zinc-400 transition">Privacy</a>
-            <a href="#" className="hover:text-zinc-400 transition">API Documentation</a>
+            <a href="#" className="hover:text-zinc-400 transition">
+              Terms
+            </a>
+            <a href="#" className="hover:text-zinc-400 transition">
+              Privacy
+            </a>
+            <a href="#" className="hover:text-zinc-400 transition">
+              API Documentation
+            </a>
           </div>
         </div>
       </footer>

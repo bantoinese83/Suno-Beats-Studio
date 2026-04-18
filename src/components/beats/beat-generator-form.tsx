@@ -12,10 +12,18 @@ import type { GenerationMode } from "@/lib/types";
 
 type GenerateResponse = { taskId: string } | { error: string; code?: number };
 
-export function BeatGeneratorForm({ initialTaskId }: { initialTaskId?: string }) {
+export function BeatGeneratorForm({
+  initialTaskId,
+}: {
+  initialTaskId?: string;
+}) {
   const [mode, setMode] = useState<GenerationMode>("quick");
-  const [prompt, setPrompt] = useState("Dark, melancholic piano loop in G MAJOR E MINOR layered with vintage soul samples and atmospheric synth pads. Keys and subtle synth textures create a moody backdrop. Occasional, sparse drum fills and processed vocal stabs add texture. No full drums");
-  const [style, setStyle] = useState("Dark, melancholic piano loop in G MAJOR E MINOR layered with vintage soul samples and atmospheric synth pads. Keys and subtle synth textures create a moody backdrop. Occasional, sparse drum fills and processed vocal stabs add texture. No full drums");
+  const [prompt, setPrompt] = useState(
+    "Dark, melancholic piano loop in G MAJOR E MINOR layered with vintage soul samples and atmospheric synth pads. Keys and subtle synth textures create a moody backdrop. Occasional, sparse drum fills and processed vocal stabs add texture. No full drums",
+  );
+  const [style, setStyle] = useState(
+    "Dark, melancholic piano loop in G MAJOR E MINOR layered with vintage soul samples and atmospheric synth pads. Keys and subtle synth textures create a moody backdrop. Occasional, sparse drum fills and processed vocal stabs add texture. No full drums",
+  );
   const [title, setTitle] = useState("");
   const [model, setModel] = useState<SunoModel>("V4_5ALL");
   const [taskId, setTaskId] = useState<string | null>(initialTaskId || null);
@@ -26,7 +34,7 @@ export function BeatGeneratorForm({ initialTaskId }: { initialTaskId?: string })
 
   const displayTracks = useMemo(
     () => buildDisplayTracks(details, callbackRecord),
-    [details, callbackRecord]
+    [details, callbackRecord],
   );
 
   const sessionLabel = getSessionStatusLabel(details, callbackRecord);
@@ -34,7 +42,7 @@ export function BeatGeneratorForm({ initialTaskId }: { initialTaskId?: string })
   const formError = localError || pollError;
 
   const currentLog = useOrchestrationLogs(
-    isSubmitting ? "START" : details?.status || null
+    isSubmitting ? "START" : details?.status || null,
   );
 
   async function handleGenerate(event: FormEvent<HTMLFormElement>) {
@@ -58,7 +66,9 @@ export function BeatGeneratorForm({ initialTaskId }: { initialTaskId?: string })
       const payload = (await res.json()) as GenerateResponse;
 
       if (!res.ok || "error" in payload) {
-        setLocalError("error" in payload ? payload.error : "Submission failed.");
+        setLocalError(
+          "error" in payload ? payload.error : "Submission failed.",
+        );
         return;
       }
 
@@ -74,13 +84,16 @@ export function BeatGeneratorForm({ initialTaskId }: { initialTaskId?: string })
     <div className="rounded-3xl border border-border bg-gradient-to-br from-white/[0.08] to-transparent p-6 sm:p-8 shadow-2xl backdrop-blur-xl">
       <form className="space-y-8" onSubmit={handleGenerate}>
         <ModeToggle mode={mode} onChange={setMode} />
-        
+
         <ModelSelector value={model} onChange={setModel} />
 
         <div className="space-y-6">
           {mode === "quick" ? (
             <div className="space-y-2">
-              <label htmlFor="prompt" className="text-[10px] font-bold uppercase tracking-widest text-muted">
+              <label
+                htmlFor="prompt"
+                className="text-[10px] font-bold uppercase tracking-widest text-muted"
+              >
                 Aural Vision
               </label>
               <textarea
@@ -93,13 +106,18 @@ export function BeatGeneratorForm({ initialTaskId }: { initialTaskId?: string })
                 className="min-h-[140px] w-full resize-none rounded-2xl border border-input bg-black/40 p-4 text-sm text-foreground outline-none transition placeholder:text-muted/50 focus:border-ring focus:ring-1 focus:ring-ring"
               />
               <div className="flex justify-end pt-1">
-                <span className="text-[10px] font-mono text-muted/60">{prompt.length}/500</span>
+                <span className="text-[10px] font-mono text-muted/60">
+                  {prompt.length}/500
+                </span>
               </div>
             </div>
           ) : (
             <div className="space-y-6">
               <div className="space-y-2">
-                <label htmlFor="style" className="text-[10px] font-bold uppercase tracking-widest text-muted">
+                <label
+                  htmlFor="style"
+                  className="text-[10px] font-bold uppercase tracking-widest text-muted"
+                >
                   Genre & Texture
                 </label>
                 <textarea
@@ -113,7 +131,10 @@ export function BeatGeneratorForm({ initialTaskId }: { initialTaskId?: string })
                 />
               </div>
               <div className="space-y-2">
-                <label htmlFor="title" className="text-[10px] font-bold uppercase tracking-widest text-muted">
+                <label
+                  htmlFor="title"
+                  className="text-[10px] font-bold uppercase tracking-widest text-muted"
+                >
                   Composition Title
                 </label>
                 <input
@@ -143,9 +164,24 @@ export function BeatGeneratorForm({ initialTaskId }: { initialTaskId?: string })
           <span className="relative z-10 flex items-center justify-center gap-3">
             {isSubmitting ? (
               <>
-                <svg className="h-4 w-4 animate-spin text-primary-foreground" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                <svg
+                  className="h-4 w-4 animate-spin text-primary-foreground"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                    fill="none"
+                  />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  />
                 </svg>
                 <span>Orchestrating...</span>
               </>
@@ -160,7 +196,9 @@ export function BeatGeneratorForm({ initialTaskId }: { initialTaskId?: string })
         <div className="mt-12 space-y-6 border-t border-border pt-10">
           <div className="flex items-center justify-between">
             <div className="space-y-1">
-              <p className="text-[10px] font-bold uppercase tracking-widest text-muted">active session</p>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-muted">
+                active session
+              </p>
               <p className="font-mono text-[10px] text-muted/50">{taskId}</p>
             </div>
             <div className="flex items-center gap-2 rounded-full bg-white/5 py-1.5 px-4 ring-1 ring-white/10">
@@ -195,12 +233,19 @@ export function BeatGeneratorForm({ initialTaskId }: { initialTaskId?: string })
             </div>
 
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-medium text-muted-foreground">Generated Stems</h3>
+              <h3 className="text-sm font-medium text-muted-foreground">
+                Generated Stems
+              </h3>
               {hasWebhookLinks && (
-                <span className="text-[10px] text-success/70">Verified via Webhook</span>
+                <span className="text-[10px] text-success/70">
+                  Verified via Webhook
+                </span>
               )}
             </div>
-            <TrackList tracks={displayTracks} loading={displayTracks.length === 0} />
+            <TrackList
+              tracks={displayTracks}
+              loading={displayTracks.length === 0}
+            />
           </div>
         </div>
       )}

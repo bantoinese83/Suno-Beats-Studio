@@ -2,15 +2,7 @@
 
 import { TrackItem } from "./track-item";
 import { TrackSkeleton } from "./track-skeleton";
-
-export interface DisplayTrack {
-  id: string;
-  title?: string;
-  duration?: number;
-  streamAudioUrl?: string;
-  audioUrl?: string;
-  source: "webhook" | "poll";
-}
+import type { DisplayTrack } from "@/lib/suno/ui-utils";
 
 interface TrackListProps {
   tracks: DisplayTrack[];
@@ -30,9 +22,7 @@ export function TrackList({ tracks, loading }: TrackListProps) {
 
     return (
       <div className="flex min-h-[100px] items-center justify-center rounded-xl border border-dashed border-border text-center">
-        <p className="text-sm text-muted">
-          Stems will appear here when ready.
-        </p>
+        <p className="text-sm text-muted">Stems will appear here when ready.</p>
       </div>
     );
   }

@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+export const runtime = "edge";
+
 import {
   SunoConfigError,
   SunoRequestError,
@@ -20,10 +22,7 @@ export async function POST(request: Request) {
   try {
     payload = await request.json();
   } catch {
-    return jsonResponse(
-      { error: "Expected a JSON body." },
-      { status: 400 },
-    );
+    return jsonResponse({ error: "Expected a JSON body." }, { status: 400 });
   }
 
   const parsed = submitBeatRequestSchema.safeParse(payload);
@@ -53,11 +52,12 @@ export async function POST(request: Request) {
 
   try {
     const result = await submitBeatForRequest(service, parsed.data);
-    
+
     // Persist the blueprint
     await beatRepository.saveBlueprint({
       taskId: result.taskId,
-      prompt: parsed.data.mode === "quick" ? parsed.data.prompt : parsed.data.style,
+      prompt:
+        parsed.data.mode === "quick" ? parsed.data.prompt : parsed.data.style,
       mode: parsed.data.mode,
       model: parsed.data.model || "V4_5ALL",
       title: parsed.data.mode === "custom" ? parsed.data.title : undefined,

@@ -1,9 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import {
-  generationDetailsSchema,
-  isTerminalGenerationStatus,
-} from "./schemas";
+import { generationDetailsSchema, isTerminalGenerationStatus } from "./schemas";
 
 describe("generationDetailsSchema", () => {
   it("parses successful generation payloads", () => {

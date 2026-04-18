@@ -68,8 +68,6 @@ export const TERMINAL_GENERATION_STATUSES: readonly GenerationStatus[] = [
   "SENSITIVE_WORD_ERROR",
 ] as const;
 
-export function isTerminalGenerationStatus(
-  status: GenerationStatus,
-): boolean {
+export function isTerminalGenerationStatus(status: GenerationStatus): boolean {
   return (TERMINAL_GENERATION_STATUSES as readonly string[]).includes(status);
 }

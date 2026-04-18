@@ -26,7 +26,7 @@ export function getStatusLabel(status: GenerationStatus): string {
 
 export function getSessionStatusLabel(
   details: GenerationDetails | null,
-  callbackRecord: SunoCallbackRecord | null
+  callbackRecord: SunoCallbackRecord | null,
 ): string {
   if (callbackRecord?.callbackType === "error") {
     return "Needs attention";
@@ -58,7 +58,7 @@ export function getSessionStatusLabel(
 export type DisplayTrack = {
   id: string;
   title?: string;
-  duration?: number;
+  duration?: number | null;
   streamAudioUrl?: string;
   audioUrl?: string;
   source: "webhook" | "poll";
@@ -66,7 +66,7 @@ export type DisplayTrack = {
 
 export function buildDisplayTracks(
   details: GenerationDetails | null,
-  callbackRecord: SunoCallbackRecord | null
+  callbackRecord: SunoCallbackRecord | null,
 ): DisplayTrack[] {
   const pollTracks = details?.response?.sunoData ?? [];
   const webhookTracks = callbackRecord?.tracks ?? [];

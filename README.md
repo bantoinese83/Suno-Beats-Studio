@@ -26,6 +26,7 @@ Suno Beats is a boutique web application designed for producers and creators who
 ## 🏗️ Architecture
 
 The project follows a "Cohesion & Verbs" principle:
+
 - **Hooks**: Logic is centralized in [useBeatStatus](src/hooks/use-beat-status.ts) for clean state management.
 - **Components**: UI is broken down into modular, single-purpose units.
 - **Verby Functions**: Internal logic is named clearly (e.g., `handleGenerate`, `getStatusLabel`) for maximum maintainability.
@@ -43,7 +44,7 @@ SUNO_CALLBACK_URL=https://your-app.com/api/webhooks/suno?token=your_random_token
 SUNO_WEBHOOK_SECRET=your_random_token
 ```
 
-*Note: For production delivery, Upstash Redis is recommended to avoid webhook data loss.*
+_Note: For production delivery, Upstash Redis is recommended to avoid webhook data loss._
 
 ### 2. Install & Run
 

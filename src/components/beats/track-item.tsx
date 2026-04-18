@@ -5,7 +5,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 interface TrackItemProps {
   id: string;
   title?: string;
-  duration?: number;
+  duration?: number | null;
   streamAudioUrl?: string;
   audioUrl?: string;
 }
@@ -17,6 +17,7 @@ function formatTime(seconds: number) {
 }
 
 export function TrackItem({
+  id,
   title,
   duration,
   streamAudioUrl,
@@ -26,10 +27,9 @@ export function TrackItem({
   const [progress, setProgress] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [trackDuration, setTrackDuration] = useState(0);
-  const [isSeeking, setIsSeeking] = useState(false);
-  
+
   const [isFavorite, setIsFavorite] = useState(false);
-  
+
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const progressBarRef = useRef<HTMLDivElement | null>(null);
 
@@ -55,19 +55,27 @@ export function TrackItem({
     }
   };
 
-  const handleSeek = useCallback((e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>) => {
-    if (!progressBarRef.current || !audioRef.current) return;
-    
-    const rect = progressBarRef.current.getBoundingClientRect();
-    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
-    const x = clientX - rect.left;
-    const width = rect.width;
-    const percentage = Math.max(0, Math.min(1, x / width));
-    
-    const newTime = percentage * audioRef.current.duration;
-    audioRef.current.currentTime = newTime;
-    setProgress(percentage * 100);
-  }, []);
+  const handleSeek = useCallback(
+    (
+      e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>,
+    ) => {
+      if (!progressBarRef.current || !audioRef.current) return;
+
+      const rect = progressBarRef.current.getBoundingClientRect();
+      const clientX =
+        "touches" in e
+          ? (e.touches[0]?.clientX ?? 0)
+          : (e as React.MouseEvent).clientX;
+      const x = clientX - rect.left;
+      const width = rect.width;
+      const percentage = Math.max(0, Math.min(1, x / width));
+
+      const newTime = percentage * audioRef.current.duration;
+      audioRef.current.currentTime = newTime;
+      setProgress(percentage * 100);
+    },
+    [],
+  );
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -77,7 +85,6 @@ export function TrackItem({
     const handlePause = () => setIsPlaying(false);
     const handleMetadata = () => setTrackDuration(audio.duration);
     const handleTimeUpdate = () => {
-      if (isSeeking) return;
       setCurrentTime(audio.currentTime);
       const p = (audio.currentTime / audio.duration) * 100;
       setProgress(isNaN(p) ? 0 : p);
@@ -101,19 +108,30 @@ export function TrackItem({
       audio.removeEventListener("timeupdate", handleTimeUpdate);
       audio.removeEventListener("ended", handleEnded);
     };
-  }, [isSeeking]);
+  }, []);
 
   return (
-    <li className={`group relative rounded-xl border transition-all duration-500 ${isPlaying ? 'border-white/20 bg-white/[0.06] shadow-[0_0_20px_rgba(255,255,255,0.05)]' : 'border-border bg-white/[0.03] hover:bg-white/[0.05]'}`}>
+    <li
+      className={`group relative rounded-xl border transition-all duration-500 ${isPlaying ? "border-white/20 bg-white/[0.06] shadow-[0_0_20px_rgba(255,255,255,0.05)]" : "border-border bg-white/[0.03] hover:bg-white/[0.05]"}`}
+    >
       <div className="p-4 space-y-4">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2">
               {isPlaying && (
                 <div className="flex items-end gap-0.5 h-3 mb-1">
-                  <div className="w-0.5 bg-primary animate-[music-bar_0.8s_ease-in-out_infinite]" style={{ height: '40%' }} />
-                  <div className="w-0.5 bg-primary animate-[music-bar_1.2s_ease-in-out_infinite]" style={{ height: '80%' }} />
-                  <div className="w-0.5 bg-primary animate-[music-bar_0.9s_ease-in-out_infinite]" style={{ height: '60%' }} />
+                  <div
+                    className="w-0.5 bg-primary animate-[music-bar_0.8s_ease-in-out_infinite]"
+                    style={{ height: "40%" }}
+                  />
+                  <div
+                    className="w-0.5 bg-primary animate-[music-bar_1.2s_ease-in-out_infinite]"
+                    style={{ height: "80%" }}
+                  />
+                  <div
+                    className="w-0.5 bg-primary animate-[music-bar_0.9s_ease-in-out_infinite]"
+                    style={{ height: "60%" }}
+                  />
                 </div>
               )}
               <p className="text-sm font-semibold text-white truncate">
@@ -121,22 +139,29 @@ export function TrackItem({
               </p>
             </div>
             <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">
-              {duration ? `${Math.round(duration)}s output` : "Analyzing structure..."}
+              {duration
+                ? `${Math.round(duration)}s output`
+                : "Analyzing structure..."}
             </p>
           </div>
 
           <div className="flex items-center gap-2 shrink-0">
-            <button 
+            <button
               onClick={toggleFavorite}
-              className={`flex h-10 w-10 items-center justify-center rounded-full border transition-all ${isFavorite ? 'border-emerald-500/50 bg-emerald-500/10 text-emerald-500' : 'border-white/10 text-zinc-500 hover:border-white/20 hover:text-white'}`}
+              className={`flex h-10 w-10 items-center justify-center rounded-full border transition-all ${isFavorite ? "border-emerald-500/50 bg-emerald-500/10 text-emerald-500" : "border-white/10 text-zinc-500 hover:border-white/20 hover:text-white"}`}
             >
-              <svg 
-                className={`h-4 w-4 ${isFavorite ? 'fill-current' : 'fill-none'}`} 
-                stroke="currentColor" 
-                viewBox="0 0 24 24" 
+              <svg
+                className={`h-4 w-4 ${isFavorite ? "fill-current" : "fill-none"}`}
+                stroke="currentColor"
+                viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                />
               </svg>
             </button>
 
@@ -153,14 +178,17 @@ export function TrackItem({
                       <div className="h-3 w-1.5 bg-black" />
                     </div>
                   ) : (
-                    <svg className="ml-0.5 h-4 w-4 fill-black" viewBox="0 0 24 24">
+                    <svg
+                      className="ml-0.5 h-4 w-4 fill-black"
+                      viewBox="0 0 24 24"
+                    >
                       <path d="M5 3l14 9-14 9V3z" />
                     </svg>
                   )}
                 </button>
               </>
             )}
-            
+
             {audioUrl && (
               <a
                 href={audioUrl}
@@ -175,14 +203,14 @@ export function TrackItem({
 
         {streamAudioUrl && (
           <div className="space-y-2">
-            <div 
+            <div
               ref={progressBarRef}
               onClick={handleSeek}
               className="relative h-1.5 w-full cursor-pointer overflow-hidden rounded-full bg-white/5 transition-colors hover:bg-white/10"
             >
-              <div 
-                className="absolute inset-y-0 left-0 bg-white/40 shadow-[0_0_10px_rgba(255,255,255,0.3)] transition-all duration-100" 
-                style={{ width: `${progress}%` }} 
+              <div
+                className="absolute inset-y-0 left-0 bg-white/40 shadow-[0_0_10px_rgba(255,255,255,0.3)] transition-all duration-100"
+                style={{ width: `${progress}%` }}
               />
             </div>
             <div className="flex items-center justify-between font-mono text-[9px] text-muted-foreground">

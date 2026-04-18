@@ -49,7 +49,11 @@ export class SunoClient {
     const text = await res.text();
 
     if (!res.ok) {
-      throw new SunoTransportError("Suno returned a non-success HTTP status.", res.status, text);
+      throw new SunoTransportError(
+        "Suno returned a non-success HTTP status.",
+        res.status,
+        text,
+      );
     }
 
     const json = parseJsonResponse(text);
@@ -78,7 +82,11 @@ export class SunoClient {
     const text = await res.text();
 
     if (!res.ok) {
-      throw new SunoTransportError("Suno returned a non-success HTTP status.", res.status, text);
+      throw new SunoTransportError(
+        "Suno returned a non-success HTTP status.",
+        res.status,
+        text,
+      );
     }
 
     const json = parseJsonResponse(text);

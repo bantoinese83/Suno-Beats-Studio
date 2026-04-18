@@ -23,7 +23,9 @@ describe("MemorySunoCallbackStore", () => {
       },
     });
 
-    await store.saveRecord(toSunoCallbackRecord(payload, new Date("2025-01-01T00:00:00.000Z")));
+    await store.saveRecord(
+      toSunoCallbackRecord(payload, new Date("2025-01-01T00:00:00.000Z")),
+    );
 
     const latest = await store.getLatest("task-1");
     expect(latest?.callbackType).toBe("first");

@@ -1,6 +1,9 @@
 import { afterEach, describe, expect, it } from "vitest";
 
-import { assertCanReadCallbackState, isWebhookAuthorized } from "./verify-webhook";
+import {
+  assertCanReadCallbackState,
+  isWebhookAuthorized,
+} from "./verify-webhook";
 
 describe("isWebhookAuthorized", () => {
   const originalSecret = process.env.SUNO_WEBHOOK_SECRET;
@@ -15,9 +18,9 @@ describe("isWebhookAuthorized", () => {
 
   it("allows traffic when no secret is configured", () => {
     delete process.env.SUNO_WEBHOOK_SECRET;
-    expect(isWebhookAuthorized(new Request("https://example.com/api/webhooks/suno"))).toBe(
-      true,
-    );
+    expect(
+      isWebhookAuthorized(new Request("https://example.com/api/webhooks/suno")),
+    ).toBe(true);
   });
 
   it("validates token query parameters", () => {
@@ -66,6 +69,8 @@ describe("assertCanReadCallbackState", () => {
         }),
       ),
     ).toBe(true);
-    expect(assertCanReadCallbackState(new Request("https://example.com"))).toBe(false);
+    expect(assertCanReadCallbackState(new Request("https://example.com"))).toBe(
+      false,
+    );
   });
 });

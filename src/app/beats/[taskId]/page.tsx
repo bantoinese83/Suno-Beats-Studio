@@ -9,7 +9,9 @@ interface PageProps {
   params: Promise<{ taskId: string }>;
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const { taskId } = await params;
   const blueprint = await beatRepository.getBlueprint(taskId);
 
@@ -29,15 +31,15 @@ export default async function SharedBeatPage({ params }: PageProps) {
     notFound();
   }
 
-  // Pre-load the status to see if it's finished
+  // Pre-load the status to see if it exists
   const env = getSunoEnv();
   const service = createBeatGenerationService(env);
-  let initialDetails = null;
-  
+
   try {
-    initialDetails = await service.getGenerationStatus(taskId);
-  } catch (error) {
+    await service.getGenerationStatus(taskId);
+  } catch {
     console.warn("[SharedPage] Could not pre-fetch status for", taskId);
+    notFound();
   }
 
   return (
@@ -51,7 +53,8 @@ export default async function SharedBeatPage({ params }: PageProps) {
             {blueprint.title || "Sound Sketch"}
           </h1>
           <p className="mx-auto max-w-2xl text-balance text-muted-foreground/80 sm:text-lg">
-            This architectural musical blueprint was generated in the Suno Beats Studio.
+            This architectural musical blueprint was generated in the Suno Beats
+            Studio.
           </p>
         </header>
 
@@ -60,11 +63,11 @@ export default async function SharedBeatPage({ params }: PageProps) {
             passing the taskId to a specialized viewer or just the form.
         */}
         <div className="mx-auto max-w-2xl">
-           {/* In this version, we will actually just redirect or show the form with the ID active. 
+          {/* In this version, we will actually just redirect or show the form with the ID active. 
                Since BeatGeneratorForm stores taskId in state, we should probably 
                modify it to accept an initialTaskId prop.
            */}
-           <BeatGeneratorForm initialTaskId={taskId} />
+          <BeatGeneratorForm initialTaskId={taskId} />
         </div>
       </div>
     </main>

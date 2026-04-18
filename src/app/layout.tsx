@@ -23,12 +23,21 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: "Suno Beats | Premium Generative Instrumentals",
-  description: "A professional studio for sculpting instrumental sketches. High-fidelity audio generation for producers and creators.",
-  keywords: ["suno", "beats", "instrumental", "ai music", "generative audio", "studio"],
+  description:
+    "A professional studio for sculpting instrumental sketches. High-fidelity audio generation for producers and creators.",
+  keywords: [
+    "suno",
+    "beats",
+    "instrumental",
+    "ai music",
+    "generative audio",
+    "studio",
+  ],
   authors: [{ name: "Suno Beats Team" }],
   openGraph: {
     title: "Suno Beats | Premium Generative Instrumentals",
-    description: "Sculpt your soundscape with professional-grade AI generation.",
+    description:
+      "Sculpt your soundscape with professional-grade AI generation.",
     type: "website",
   },
 };

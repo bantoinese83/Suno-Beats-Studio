@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+export const runtime = "edge";
+
 import {
   SunoConfigError,
   SunoRequestError,
@@ -44,7 +46,7 @@ export async function GET(request: Request) {
     return jsonResponse({ details });
   } catch (error) {
     console.error(`[API/Status] Task ${parsed.data.taskId} failed:`, error);
-    
+
     if (error instanceof SunoRequestError) {
       return jsonResponse(
         {

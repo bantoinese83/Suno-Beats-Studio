@@ -1,4 +1,7 @@
 import { jsonResponse } from "@/lib/suno/http/json-response";
+
+export const runtime = "nodejs";
+
 import { sunoMusicCallbackPayloadSchema } from "@/lib/suno/webhook/callback-payload.schema";
 import { toSunoCallbackRecord } from "@/lib/suno/webhook/callback-record";
 import { createSunoCallbackStore } from "@/lib/suno/webhook/create-callback-store";
@@ -20,7 +23,10 @@ export async function POST(request: Request) {
   const parsed = sunoMusicCallbackPayloadSchema.safeParse(body);
 
   if (!parsed.success) {
-    return jsonResponse({ error: "Unexpected payload shape." }, { status: 400 });
+    return jsonResponse(
+      { error: "Unexpected payload shape." },
+      { status: 400 },
+    );
   }
 
   const store = createSunoCallbackStore();

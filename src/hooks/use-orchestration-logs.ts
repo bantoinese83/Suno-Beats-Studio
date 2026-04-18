@@ -23,26 +23,34 @@ const LOGS_MAP: Record<string, string[]> = {
   SUCCESS: ["Architecture stable.", "Rendering complete."],
 };
 
-export function useOrchestrationLogs(status: GenerationStatus | "START" | null) {
+export function useOrchestrationLogs(
+  status: GenerationStatus | "START" | null,
+) {
   const [currentLog, setCurrentLog] = useState<string>("");
-  const [logIndex, setLogIndex] = useState(0);
+  const [, setLogIndex] = useState(0);
+  const [prevStatus, setPrevStatus] = useState(status);
 
-  useEffect(() => {
+  if (status !== prevStatus) {
+    setPrevStatus(status);
     if (!status) {
       setCurrentLog("");
       setLogIndex(0);
-      return;
+    } else {
+      const logs = LOGS_MAP[status] || LOGS_MAP.PENDING || [];
+      setCurrentLog(logs[0] || "");
+      setLogIndex(0);
     }
+  }
 
-    const logs = LOGS_MAP[status] || LOGS_MAP.PENDING;
-    setCurrentLog(logs[0]);
-    setLogIndex(0);
+  useEffect(() => {
+    if (!status) return;
 
+    const logs = LOGS_MAP[status] || LOGS_MAP.PENDING || [];
     const interval = setInterval(() => {
       setLogIndex((prev) => {
         const next = prev + 1;
         if (next < logs.length) {
-          setCurrentLog(logs[next]);
+          setCurrentLog(logs[next] || "");
           return next;
         }
         return prev;

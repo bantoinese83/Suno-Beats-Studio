@@ -9,6 +9,9 @@ export async function GET() {
     return jsonResponse({ history });
   } catch (error) {
     console.error("[API/Library] Failed to fetch history:", error);
-    return jsonResponse({ error: "Could not fetch your library." }, { status: 500 });
+    return jsonResponse(
+      { error: "Could not fetch your library." },
+      { status: 500 },
+    );
   }
 }

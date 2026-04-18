@@ -16,12 +16,13 @@ export default function Home() {
         </div>
 
         <h1 className="mt-10 max-w-3xl bg-gradient-to-b from-white to-zinc-500 bg-clip-text text-4xl font-light leading-[1.1] tracking-tight text-transparent sm:text-7xl">
-          The art of the <br /> 
+          The art of the <br />
           <span className="font-serif italic">unspoken</span> rhythm.
         </h1>
 
         <p className="mt-8 max-w-lg text-base leading-relaxed text-zinc-400/80">
-          A minimalist sanctuary for instrumental sketches. Create, iterate, and download custom beats powered by generative intelligence.
+          A minimalist sanctuary for instrumental sketches. Create, iterate, and
+          download custom beats powered by generative intelligence.
         </p>
 
         <div className="mt-12 flex flex-col items-center gap-6 sm:flex-row">
@@ -31,7 +32,7 @@ export default function Home() {
           >
             Enter the Lab
           </Link>
-          
+
           <a
             href="https://github.com"
             target="_blank"
