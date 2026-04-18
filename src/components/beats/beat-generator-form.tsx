@@ -13,8 +13,8 @@ type GenerateResponse = { taskId: string } | { error: string; code?: number };
 
 export function BeatGeneratorForm() {
   const [mode, setMode] = useState<GenerationMode>("quick");
-  const [prompt, setPrompt] = useState("");
-  const [style, setStyle] = useState("");
+  const [prompt, setPrompt] = useState("Dark, melancholic piano loop in G MAJOR E MINOR layered with vintage soul samples and atmospheric synth pads. Keys and subtle synth textures create a moody backdrop. Occasional, sparse drum fills and processed vocal stabs add texture. No full drums");
+  const [style, setStyle] = useState("Dark, melancholic piano loop in G MAJOR E MINOR layered with vintage soul samples and atmospheric synth pads. Keys and subtle synth textures create a moody backdrop. Occasional, sparse drum fills and processed vocal stabs add texture. No full drums");
   const [title, setTitle] = useState("");
   const [model, setModel] = useState<SunoModel>("V4_5ALL");
   const [taskId, setTaskId] = useState<string | null>(null);
