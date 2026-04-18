@@ -3,7 +3,7 @@ import { BeatGeneratorForm } from "@/components/beats/beat-generator-form";
 
 export default function BeatsPage() {
   return (
-    <div className="min-h-full flex flex-col bg-black text-zinc-50 selection:bg-white/10">
+    <div className="flex flex-1 flex-col bg-background text-foreground selection:bg-white/10">
       <header className="sticky top-0 z-50 border-b border-white/5 bg-black/50 px-6 py-4 backdrop-blur-xl">
         <div className="mx-auto flex w-full max-w-5xl items-center justify-between">
           <Link

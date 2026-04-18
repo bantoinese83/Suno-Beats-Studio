@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="relative flex min-h-full flex-col items-center justify-center overflow-hidden bg-black px-6 text-center">
+    <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-background px-6 text-center">
       {/* Ambient background glow */}
       <div className="absolute top-[-10%] left-[-10%] h-[40%] w-[40%] rounded-full bg-white/5 blur-[120px]" />
       <div className="absolute bottom-[-10%] right-[-10%] h-[40%] w-[40%] rounded-full bg-white/5 blur-[120px]" />
@@ -15,7 +15,7 @@ export default function Home() {
           </p>
         </div>
 
-        <h1 className="mt-10 max-w-3xl bg-gradient-to-b from-white to-zinc-500 bg-clip-text text-5xl font-light leading-[1.1] tracking-tight text-transparent sm:text-7xl">
+        <h1 className="mt-10 max-w-3xl bg-gradient-to-b from-white to-zinc-500 bg-clip-text text-4xl font-light leading-[1.1] tracking-tight text-transparent sm:text-7xl">
           The art of the <br /> 
           <span className="font-serif italic">unspoken</span> rhythm.
         </h1>

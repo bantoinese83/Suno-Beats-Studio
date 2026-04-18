@@ -17,8 +17,8 @@ export function TrackItem({
   return (
     <li className="group rounded-xl border border-border bg-white/[0.03] p-4 transition hover:bg-white/[0.05]">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <p className="text-sm font-medium text-white">
+        <div className="min-w-0 flex-1">
+          <p className="text-sm font-medium text-white break-words">
             {title || "Untitled sketch"}
           </p>
           <p className="text-xs text-zinc-500">

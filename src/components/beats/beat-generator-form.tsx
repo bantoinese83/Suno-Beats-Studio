@@ -66,7 +66,7 @@ export function BeatGeneratorForm() {
   }
 
   return (
-    <div className="rounded-3xl border border-border bg-gradient-to-br from-white/[0.08] to-transparent p-8 shadow-2xl backdrop-blur-xl">
+    <div className="rounded-3xl border border-border bg-gradient-to-br from-white/[0.08] to-transparent p-6 sm:p-8 shadow-2xl backdrop-blur-xl">
       <form className="space-y-8" onSubmit={handleGenerate}>
         <ModeToggle mode={mode} onChange={setMode} />
         

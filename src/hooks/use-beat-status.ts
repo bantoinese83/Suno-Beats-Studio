@@ -13,14 +13,20 @@ export function useBeatStatus(taskId: string | null) {
   const [callbackRecord, setCallbackRecord] = useState<SunoCallbackRecord | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isPolling, setIsPolling] = useState(false);
+  const [prevTaskId, setPrevTaskId] = useState(taskId);
 
-  useEffect(() => {
+  // Reset state during render if taskId changes to null
+  if (taskId !== prevTaskId) {
+    setPrevTaskId(taskId);
     if (!taskId) {
       setDetails(null);
       setCallbackRecord(null);
       setError(null);
-      return;
     }
+  }
+
+  useEffect(() => {
+    if (!taskId) return;
 
     let cancelled = false;
     let timer: ReturnType<typeof setInterval> | undefined;
@@ -70,7 +76,7 @@ export function useBeatStatus(taskId: string | null) {
           clearInterval(timer);
           timer = undefined;
         }
-      } catch (err) {
+      } catch {
         if (!cancelled) {
           setError("Connection dropped. Still trying...");
         }

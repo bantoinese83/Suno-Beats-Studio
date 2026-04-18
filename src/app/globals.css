@@ -30,15 +30,23 @@
 }
 
 @layer base {
-  * {
+  *, ::before, ::after {
     @apply border-border outline-ring;
+    box-sizing: border-box;
   }
   
-  html, body {
-    @apply bg-background text-foreground h-full;
+  html {
+    @apply h-full;
+    background-color: var(--color-background);
+  }
+
+  body {
+    @apply bg-background text-foreground min-h-full m-0 p-0 flex flex-col;
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Prevent grey background on overscroll */
+    background-attachment: fixed;
   }
 }
 
@@ -73,9 +81,4 @@
 
 ::selection {
   @apply bg-white/15 text-white;
-}
-
-/* Global Transition Smoothness */
-* {
-  @apply transition-all duration-200 ease-out;
 }

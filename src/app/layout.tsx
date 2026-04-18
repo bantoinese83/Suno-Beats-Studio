@@ -16,6 +16,9 @@ const instrumentSerif = Instrument_Serif({
 
 export const viewport: Viewport = {
   themeColor: "#000000",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 export const metadata: Metadata = {
@@ -40,7 +43,7 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${instrumentSerif.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-background selection:bg-white/20">
+      <body className="min-h-screen flex flex-col bg-background selection:bg-white/20 overflow-x-hidden">
         {children}
       </body>
     </html>
