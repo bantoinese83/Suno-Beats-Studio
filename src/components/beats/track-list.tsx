@@ -19,8 +19,8 @@ interface TrackListProps {
 export function TrackList({ tracks, loading }: TrackListProps) {
   if (tracks.length === 0) {
     return (
-      <div className="flex min-h-[100px] items-center justify-center rounded-xl border border-dashed border-white/10 text-center">
-        <p className="text-sm text-zinc-500">
+      <div className="flex min-h-[100px] items-center justify-center rounded-xl border border-dashed border-border text-center">
+        <p className="text-sm text-muted">
           {loading ? "Warming up the engines..." : "Stems will appear here when ready."}
         </p>
       </div>

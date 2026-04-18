@@ -15,7 +15,7 @@ export function TrackItem({
   audioUrl,
 }: TrackItemProps) {
   return (
-    <li className="group rounded-xl border border-white/5 bg-white/[0.03] p-4 transition hover:border-white/10 hover:bg-white/[0.05]">
+    <li className="group rounded-xl border border-border bg-white/[0.03] p-4 transition hover:bg-white/[0.05]">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="text-sm font-medium text-white">

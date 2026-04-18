@@ -66,7 +66,7 @@ export function BeatGeneratorForm() {
   }
 
   return (
-    <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.08] to-transparent p-8 shadow-2xl backdrop-blur-xl">
+    <div className="rounded-3xl border border-border bg-gradient-to-br from-white/[0.08] to-transparent p-8 shadow-2xl backdrop-blur-xl">
       <form className="space-y-8" onSubmit={handleGenerate}>
         <ModeToggle mode={mode} onChange={setMode} />
         
@@ -75,7 +75,7 @@ export function BeatGeneratorForm() {
         <div className="space-y-6">
           {mode === "quick" ? (
             <div className="space-y-2">
-              <label htmlFor="prompt" className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">
+              <label htmlFor="prompt" className="text-[10px] font-bold uppercase tracking-widest text-muted">
                 Aural Vision
               </label>
               <textarea
@@ -85,16 +85,16 @@ export function BeatGeneratorForm() {
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
                 placeholder="Soulful keys, 90bpm, lofi texture..."
-                className="min-h-[140px] w-full resize-none rounded-2xl border border-white/5 bg-black/40 p-4 text-sm text-white outline-none transition placeholder:text-zinc-700 focus:border-white/20 focus:ring-1 focus:ring-white/10"
+                className="min-h-[140px] w-full resize-none rounded-2xl border border-input bg-black/40 p-4 text-sm text-foreground outline-none transition placeholder:text-muted/50 focus:border-ring focus:ring-1 focus:ring-ring"
               />
               <div className="flex justify-end">
-                <span className="text-[10px] font-mono text-zinc-600">{prompt.length}/500</span>
+                <span className="text-[10px] font-mono text-muted/60">{prompt.length}/500</span>
               </div>
             </div>
           ) : (
             <div className="space-y-6">
               <div className="space-y-2">
-                <label htmlFor="style" className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">
+                <label htmlFor="style" className="text-[10px] font-bold uppercase tracking-widest text-muted">
                   Genre & Texture
                 </label>
                 <textarea
@@ -104,11 +104,11 @@ export function BeatGeneratorForm() {
                   value={style}
                   onChange={(e) => setStyle(e.target.value)}
                   placeholder="Techno, industrial drums, sharp synths..."
-                  className="min-h-[100px] w-full resize-none rounded-2xl border border-white/5 bg-black/40 p-4 text-sm text-white outline-none transition placeholder:text-zinc-700 focus:border-white/20 focus:ring-1 focus:ring-white/10"
+                  className="min-h-[100px] w-full resize-none rounded-2xl border border-input bg-black/40 p-4 text-sm text-foreground outline-none transition placeholder:text-muted/50 focus:border-ring focus:ring-1 focus:ring-ring"
                 />
               </div>
               <div className="space-y-2">
-                <label htmlFor="title" className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">
+                <label htmlFor="title" className="text-[10px] font-bold uppercase tracking-widest text-muted">
                   Composition Title
                 </label>
                 <input
@@ -117,7 +117,7 @@ export function BeatGeneratorForm() {
                   maxLength={100}
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="w-full rounded-2xl border border-white/5 bg-black/40 p-4 text-sm text-white outline-none transition focus:border-white/20 focus:ring-1 focus:ring-white/10"
+                  className="w-full rounded-2xl border border-input bg-black/40 p-4 text-sm text-foreground outline-none transition focus:border-ring focus:ring-1 focus:ring-ring"
                 />
               </div>
             </div>
@@ -125,7 +125,7 @@ export function BeatGeneratorForm() {
         </div>
 
         {formError && (
-          <div className="rounded-2xl border border-red-500/20 bg-red-500/5 px-4 py-3 text-sm text-red-400">
+          <div className="rounded-2xl border border-error/20 bg-error/5 px-4 py-3 text-sm text-error/80">
             {formError}
           </div>
         )}
@@ -133,7 +133,7 @@ export function BeatGeneratorForm() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="group relative w-full overflow-hidden rounded-full bg-white py-4 text-sm font-bold text-black transition hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50"
+          className="group relative w-full overflow-hidden rounded-full bg-primary py-4 text-sm font-bold text-primary-foreground transition hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50"
         >
           <span className="relative z-10 flex items-center justify-center gap-2">
             {isSubmitting ? "Orchestrating..." : "Launch Generation"}
@@ -142,28 +142,28 @@ export function BeatGeneratorForm() {
       </form>
 
       {taskId && (
-        <div className="mt-12 space-y-6 border-t border-white/5 pt-10">
+        <div className="mt-12 space-y-6 border-t border-border pt-10">
           <div className="flex items-center justify-between">
             <div className="space-y-1">
-              <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">active session</p>
-              <p className="font-mono text-[10px] text-zinc-400 opacity-50">{taskId}</p>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-muted">active session</p>
+              <p className="font-mono text-[10px] text-muted/50">{taskId}</p>
             </div>
-            <div className="rounded-full bg-zinc-800/50 px-4 py-1.5 text-[11px] font-medium text-white ring-1 ring-white/10">
+            <div className="rounded-full bg-secondary px-4 py-1.5 text-[11px] font-medium text-foreground ring-1 ring-border">
               {sessionLabel}
             </div>
           </div>
 
           {callbackRecord?.code !== 200 && callbackRecord?.msg && (
-            <div className="rounded-xl bg-amber-500/10 p-3 text-xs text-amber-200/80">
+            <div className="rounded-xl bg-warning/10 p-3 text-xs text-warning/80">
               {callbackRecord.msg}
             </div>
           )}
 
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-medium text-zinc-300">Generated Stems</h3>
+              <h3 className="text-sm font-medium text-muted-foreground">Generated Stems</h3>
               {hasWebhookLinks && (
-                <span className="text-[10px] text-emerald-400/70">Verified via Webhook</span>
+                <span className="text-[10px] text-success/70">Verified via Webhook</span>
               )}
             </div>
             <TrackList tracks={displayTracks} loading={displayTracks.length === 0} />

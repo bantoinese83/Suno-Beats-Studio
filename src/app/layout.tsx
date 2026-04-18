@@ -40,7 +40,7 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${instrumentSerif.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-black selection:bg-white/20">
+      <body className="min-h-full flex flex-col bg-background selection:bg-white/20">
         {children}
       </body>
     </html>
