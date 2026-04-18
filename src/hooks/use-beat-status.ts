@@ -29,10 +29,11 @@ export function useBeatStatus(taskId: string | null) {
       setIsPolling(true);
       try {
         const [statusResult, callbackResult] = await Promise.all([
-          fetch(`/api/beats/status?taskId=${encodeURIComponent(taskId)}`).then(async (res) => ({
-            res,
-            payload: (await res.json()) as StatusResponse,
-          })),
+          fetch(`/api/beats/status?taskId=${encodeURIComponent(taskId)}`).then(async (res) => {
+            const isJson = res.headers.get("content-type")?.includes("application/json");
+            const payload = isJson ? (await res.json()) as StatusResponse : { error: "Service temporarily unavailable" };
+            return { res, payload };
+          }),
           fetchLatestBeatCallback(taskId),
         ]);
 

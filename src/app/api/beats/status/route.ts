@@ -43,6 +43,8 @@ export async function GET(request: Request) {
     const details = await service.getGenerationStatus(parsed.data.taskId);
     return jsonResponse({ details });
   } catch (error) {
+    console.error(`[API/Status] Task ${parsed.data.taskId} failed:`, error);
+    
     if (error instanceof SunoRequestError) {
       return jsonResponse(
         {
