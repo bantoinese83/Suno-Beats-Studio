@@ -1,6 +1,7 @@
 "use client";
 
 import { TrackItem } from "./track-item";
+import { TrackSkeleton } from "./track-skeleton";
 
 export interface DisplayTrack {
   id: string;
@@ -18,10 +19,19 @@ interface TrackListProps {
 
 export function TrackList({ tracks, loading }: TrackListProps) {
   if (tracks.length === 0) {
+    if (loading) {
+      return (
+        <div className="space-y-3">
+          <TrackSkeleton />
+          <TrackSkeleton />
+        </div>
+      );
+    }
+
     return (
       <div className="flex min-h-[100px] items-center justify-center rounded-xl border border-dashed border-border text-center">
         <p className="text-sm text-muted">
-          {loading ? "Warming up the engines..." : "Stems will appear here when ready."}
+          Stems will appear here when ready.
         </p>
       </div>
     );
