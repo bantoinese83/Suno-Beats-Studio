@@ -23,8 +23,8 @@ const sunoTrackSchema = z.object({
   modelName: z.string().optional(),
   title: z.string().optional(),
   tags: z.string().optional(),
-  createTime: z.string().optional(),
-  duration: z.number().optional(),
+  createTime: z.union([z.string(), z.number()]).optional(),
+  duration: z.number().nullable().optional(),
 });
 
 export const generationStatusSchema = z.enum([
