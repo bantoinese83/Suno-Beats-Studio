@@ -11,21 +11,6 @@ import type { GenerationMode } from "@/lib/types";
 
 type GenerateResponse = { taskId: string } | { error: string; code?: number };
 
-const STARTER_PROMPTS = [
-  {
-    label: "Melancholic Loop",
-    prompt: "Dark, melancholic piano loop in G MAJOR E MINOR layered with vintage soul samples and atmospheric synth pads. Keys and subtle synth textures create a moody backdrop. Occasional, sparse drum fills and processed vocal stabs add texture. No full drums",
-  },
-  {
-    label: "Midnight Keys",
-    prompt: "Nocturnal piano sketch, minor key, heavy reverb, subtle vinyl static, distant cello layers, extremely slow tempo, emotional and haunting.",
-  },
-  {
-    label: "Dark Textures",
-    prompt: "Experimental dark ambient keys, reversed piano textures, deep sub-bass pulses, industrial atmospheric noise, haunting vocal echoes, rhythmic but drumless.",
-  },
-];
-
 export function BeatGeneratorForm() {
   const [mode, setMode] = useState<GenerationMode>("quick");
   const [prompt, setPrompt] = useState("");
@@ -102,18 +87,6 @@ export function BeatGeneratorForm() {
                 placeholder="Soulful keys, 90bpm, lofi texture..."
                 className="min-h-[140px] w-full resize-none rounded-2xl border border-input bg-black/40 p-4 text-sm text-foreground outline-none transition placeholder:text-muted/50 focus:border-ring focus:ring-1 focus:ring-ring"
               />
-              <div className="flex flex-wrap gap-2 pt-2">
-                {STARTER_PROMPTS.map((starter) => (
-                  <button
-                    key={starter.label}
-                    type="button"
-                    onClick={() => setPrompt(starter.prompt)}
-                    className="rounded-full bg-white/[0.03] px-3 py-1 text-[10px] font-medium text-muted-foreground transition hover:bg-white/10 hover:text-white"
-                  >
-                    {starter.label}
-                  </button>
-                ))}
-              </div>
               <div className="flex justify-end pt-1">
                 <span className="text-[10px] font-mono text-muted/60">{prompt.length}/500</span>
               </div>
@@ -133,18 +106,6 @@ export function BeatGeneratorForm() {
                   placeholder="Techno, industrial drums, sharp synths..."
                   className="min-h-[100px] w-full resize-none rounded-2xl border border-input bg-black/40 p-4 text-sm text-foreground outline-none transition placeholder:text-muted/50 focus:border-ring focus:ring-1 focus:ring-ring"
                 />
-                <div className="flex flex-wrap gap-2 pt-2">
-                  {STARTER_PROMPTS.slice(0, 3).map((starter) => (
-                    <button
-                      key={starter.label}
-                      type="button"
-                      onClick={() => setStyle(starter.prompt)}
-                      className="rounded-full bg-white/[0.03] px-3 py-1 text-[10px] font-medium text-muted-foreground transition hover:bg-white/10 hover:text-white"
-                    >
-                      {starter.label}
-                    </button>
-                  ))}
-                </div>
               </div>
               <div className="space-y-2">
                 <label htmlFor="title" className="text-[10px] font-bold uppercase tracking-widest text-muted">
